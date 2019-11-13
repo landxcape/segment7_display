@@ -113,20 +113,37 @@ void segment7_display::setSelection(bool select = 1)
 
 void segment7_display::display_num_rows(char *ROWS, int decimal_pos)
 {
+    bool leading_zero;
+    char num;
+    int leading_cols;
+    int num_shift = 0;
     for (int r = 0; r < rows; r++)
     {
-        for (int c = 0; c < cols; c++)
+        leading_zero = true;
+        leading_cols = (int)*(ROWS + num_shift) - 48;
+        num_shift++;
+
+        for (int c = 1; c <= leading_cols; c++)
         {
+            num = *(ROWS + num_shift);
+            num_shift++;
             clearBits();
-            if (r == 0 && c == 0)
+            if (r == 0 && c == 1)
                 setSelection(0);
             else
                 setSelection(1);
 
-            if (c == decimal_pos)
-                number_display(*(ROWS + r * cols + c), true);
+            if (leading_zero && num == '0' && c != decimal_pos && c != leading_cols)
+            {
+            }
             else
-                number_display(*(ROWS + r * cols + c), false);
+            {
+                leading_zero = false;
+                if (c == decimal_pos)
+                    number_display(num, true);
+                else
+                    number_display(num, false);
+            }
 
             delayMicroseconds(tdelay);
         }
