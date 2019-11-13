@@ -12,11 +12,14 @@ class segment7_display
 public:
     segment7_display(int cols, int rows, int max_loop_tdelay = 1000);
 
-    void pinSetup();
+    void pinSetup(uint8_t cPin = 2, uint8_t dPin = 3, uint8_t lPin = 4,
+                  uint8_t sClock = 5, uint8_t sPin = 6, uint8_t sLatch = 7);
+
     void clearBits();
     void number_display(char number, bool decimalSet = false);
-    void dataSet(bool data);
-    void selectionSet(bool select = 1);
+    void setData(bool data);
+    void setSelection(bool select = 1);
+
     int rtdelay();
 
 private:
@@ -25,13 +28,13 @@ private:
     int max_loop_tdelay;
     int tdelay = max_loop_tdelay / (cols * rows);
 
-    uint8_t selectionClock = 5;
-    uint8_t selectionPin = 6;
-    uint8_t selectionLatch = 7;
+    uint8_t selectionClock;
+    uint8_t selectionPin;
+    uint8_t selectionLatch;
 
-    const uint8_t clockPin = 2;
-    const uint8_t dataPin = 3;
-    const uint8_t latchPin = 4;
+    uint8_t clockPin;
+    uint8_t dataPin;
+    uint8_t latchPin;
 
     const bool segment_map[11][7] = {
         {1, 1, 1, 1, 1, 1, 0}, // 0
