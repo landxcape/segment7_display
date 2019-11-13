@@ -19,6 +19,7 @@ public:
     void number_display(char number, bool decimalSet = false);
     void setData(bool data);
     void setSelection(bool select = 1);
+    void display_num_rows(char *ROWS, int decimal_pos = -1);
 
     int rtdelay();
 

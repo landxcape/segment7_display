@@ -110,3 +110,25 @@ void segment7_display::setSelection(bool select = 1)
     digitalWrite(selectionClock, LOW);  // Clock end
     digitalWrite(selectionLatch, HIGH); // Latch end
 }
+
+void segment7_display::display_num_rows(char *ROWS, int decimal_pos)
+{
+    for (int r = 0; r < rows; r++)
+    {
+        for (int c = 0; c < cols; c++)
+        {
+            clearBits();
+            if (r == 0 && c == 0)
+                setSelection(0);
+            else
+                setSelection(1);
+
+            if (c == decimal_pos)
+                number_display(*(ROWS + r * cols + c), true);
+            else
+                number_display(*(ROWS + r * cols + c), false);
+
+            delayMicroseconds(tdelay);
+        }
+    }
+}
