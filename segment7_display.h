@@ -19,7 +19,7 @@ public:
     void number_display(char number, bool decimalSet = false);
     void setData(bool data);
     void setSelection(bool select = 1);
-    void display_num_rows(String ROWS, int decimal_pos = -1, bool first_row = false);
+    void display_num_rows(String ROWS, bool first_row = false);
 
     int rtdelay();
 

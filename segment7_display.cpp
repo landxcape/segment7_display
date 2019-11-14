@@ -111,37 +111,36 @@ void segment7_display::setSelection(bool select = 1)
     digitalWrite(selectionLatch, HIGH); // Latch end
 }
 
-void segment7_display::display_num_rows(String ROWS, int decimal_pos, bool first_row)
+void segment7_display::display_num_rows(String ROWS, bool first_row)
 {
-    bool leading_zero;
+    bool leading_zero = true;
     char num;
-    int leading_cols;
-    int num_shift = 0;
-    leading_zero = true;
-    leading_cols = (int)ROWS[0] - 48;
+    int display_cols = ROWS.length();
 
-    for (int c = 1; c <= leading_cols; c++)
+    for (int c = 0; c < display_cols; c++)
     {
         num = ROWS[c];
         clearBits();
-        if (first_row && c == 1)
+        if (first_row && c == 0)
             setSelection(0);
         else
             setSelection(1);
 
-        if (leading_zero && num == '0' && c != decimal_pos && c != leading_cols)
+        if (leading_zero && num == '0' && ROWS[c + 1] != '.' && c != display_cols - 1)
         {
         }
         else
         {
             leading_zero = false;
-            if (c == decimal_pos)
+            if (ROWS[c + 1] == '.')
+            {
                 number_display(num, true);
+                c++;
+            }
             else
                 number_display(num, false);
         }
 
         delayMicroseconds(tdelay);
     }
-    // }
 }
