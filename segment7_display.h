@@ -19,7 +19,7 @@ public:
     void number_display(char number, bool decimalSet = false);
     void setData(bool data);
     void setSelection(bool select = 1);
-    void display_num_rows(char *ROWS, int decimal_pos = -1);
+    void display_num_rows(String ROWS, int decimal_pos = -1, bool first_row = false);
 
     int rtdelay();
 
@@ -48,7 +48,7 @@ private:
         {1, 1, 1, 0, 0, 0, 0}, // 7
         {1, 1, 1, 1, 1, 1, 1}, // 8
         {1, 1, 1, 1, 0, 1, 1}, // 9
-        {1, 0, 0, 1, 1, 1, 0}  // Error "E"
+        {1, 0, 0, 1, 1, 1, 1}  // Error "E"
     };
 };
 
