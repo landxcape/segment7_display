@@ -12,16 +12,15 @@ class segment7_display
 public:
     segment7_display(int cols, int rows, int max_loop_tdelay = 1000);
 
-    void pinSetup(uint8_t cPin = 2, uint8_t dPin = 3, uint8_t lPin = 4,
-                  uint8_t sClock = 5, uint8_t sPin = 6, uint8_t sLatch = 7);
+    void pinSetup(uint8_t dPin = 2, uint8_t lPin = 3, uint8_t cPin = 4,
+                  uint8_t sPin = 5, uint8_t sLatch = 6, uint8_t sClock = 7);
 
     void clearBits();
     void number_display(char number, bool decimalSet = false);
     void setData(bool data);
     void setSelection(bool select = 1);
     void display_num_rows(String ROWS, bool first_row = false);
-
-    int rtdelay();
+    void display_values(String *ROW_VALUES);
 
 private:
     int cols;

@@ -7,23 +7,18 @@ segment7_display::segment7_display(int cols, int rows, int max_loop_tdelay = 100
     pinSetup();
 }
 
-void segment7_display::pinSetup(uint8_t cPin, uint8_t dPin, uint8_t lPin,
-                                uint8_t sClock, uint8_t sPin, uint8_t sLatch)
+void segment7_display::pinSetup(uint8_t dPin, uint8_t lPin, uint8_t cPin,
+                                uint8_t sPin, uint8_t sLatch, uint8_t sClock)
 {
-    for (uint8_t i = cPin; i <= sLatch; i++)
+    for (uint8_t i = dPin; i <= sClock; i++)
         pinMode(i, OUTPUT);
 
-    clockPin = cPin;
     dataPin = dPin;
     latchPin = lPin;
-    selectionClock = sClock;
+    clockPin = cPin;
     selectionPin = sPin;
     selectionLatch = sLatch;
-}
-
-int segment7_display::rtdelay()
-{
-    return tdelay;
+    selectionClock = sClock;
 }
 
 void segment7_display::clearBits()
@@ -142,5 +137,14 @@ void segment7_display::display_num_rows(String ROWS, bool first_row)
         }
 
         delayMicroseconds(tdelay);
+    }
+}
+
+void segment7_display::display_values(String *ROW_VALUES)
+{
+    display_num_rows(*(ROW_VALUES), true);
+    for (int i = 1; i < rows; i++)
+    {
+        display_num_rows(*(ROW_VALUES + i));
     }
 }
