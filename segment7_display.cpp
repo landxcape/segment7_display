@@ -19,18 +19,19 @@ void segment7_display::pinSetup(uint8_t dPin, uint8_t lPin, uint8_t cPin,
     selectionClock = sClock;
 }
 
-void segment7_display::setDisplay(int cols, int rows, int max_l_tdelay)
+void segment7_display::setDisplay(int cols, int rows, int max_l_tdelay, bool CC)
 {
     ncols = cols;
     nrows = rows;
     max_loop_tdelay = max_l_tdelay;
+    COMMON_CATHODE = CC;
     tdelay = max_loop_tdelay / (cols * rows);
 }
 
 void segment7_display::clearBits()
 {
     digitalWrite(latchPin, LOW);
-    shiftOut(dataPin, clockPin, LSBFIRST, 0B00000000);
+    shiftOut(dataPin, clockPin, LSBFIRST, clearBit);
     digitalWrite(latchPin, HIGH);
 }
 
@@ -98,6 +99,8 @@ void segment7_display::number_display(char number, bool decimalSet = false)
 
 void segment7_display::setData(bool data)
 {
+    if (!COMMON_CATHODE)
+        data = !data;
     digitalWrite(dataPin, data);  // Data set
     digitalWrite(clockPin, HIGH); // Clock
     digitalWrite(clockPin, LOW);  // Clock end
@@ -105,6 +108,8 @@ void segment7_display::setData(bool data)
 
 void segment7_display::setSelection(bool select = 1)
 {
+    if (!COMMON_CATHODE)
+        select = !select;
     digitalWrite(selectionLatch, LOW);  // Latch
     digitalWrite(selectionPin, select); // Data set
     digitalWrite(selectionClock, HIGH); // Clock
