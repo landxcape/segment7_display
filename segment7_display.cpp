@@ -1,8 +1,6 @@
 #include "segment7_display.h"
 
-segment7_display::segment7_display(int cols, int rows, int max_loop_tdelay = 1000) : cols(cols),
-                                                                                     rows(rows),
-                                                                                     max_loop_tdelay(max_loop_tdelay)
+segment7_display::segment7_display()
 {
     pinSetup();
 }
@@ -19,6 +17,14 @@ void segment7_display::pinSetup(uint8_t dPin, uint8_t lPin, uint8_t cPin,
     selectionPin = sPin;
     selectionLatch = sLatch;
     selectionClock = sClock;
+}
+
+void segment7_display::setDisplay(int cols, int rows, int max_l_tdelay)
+{
+    ncols = cols;
+    nrows = rows;
+    max_loop_tdelay = max_l_tdelay;
+    tdelay = max_loop_tdelay / (cols * rows);
 }
 
 void segment7_display::clearBits()
@@ -143,7 +149,7 @@ void segment7_display::display_num_rows(String ROWS, bool first_row)
 void segment7_display::display_values(String *ROW_VALUES)
 {
     display_num_rows(*(ROW_VALUES), true);
-    for (int i = 1; i < rows; i++)
+    for (int i = 1; i < nrows; i++)
     {
         display_num_rows(*(ROW_VALUES + i));
     }
