@@ -139,7 +139,10 @@ void segment7_display::display_num_rows(String ROWS, bool first_row)
                 number_display(num, false);
         }
 
-        delayMicroseconds(tdelay);
+        if (tdelay < 16383)
+            delayMicroseconds(tdelay);
+        else
+            delay(tdelay / 1000);
     }
 }
 
