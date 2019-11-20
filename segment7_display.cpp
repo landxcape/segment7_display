@@ -37,48 +37,49 @@ void segment7_display::clearBits()
 
 void segment7_display::number_display(char number, bool decimalSet = false)
 {
+    uint8_t num = (int)number - 48;
     digitalWrite(latchPin, LOW); // Latch
     setData(decimalSet);
 
-    if (number == '0')
+    if (num >= 0 && num <= 9)
         for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[0][6 - i]);
+            setData(segment_map[num][6 - i]);
 
-    else if (number == '1')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[1][6 - i]);
+    // else if (number == '1')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[1][6 - i]);
 
-    else if (number == '2')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[2][6 - i]);
+    // else if (number == '2')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[2][6 - i]);
 
-    else if (number == '3')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[3][6 - i]);
+    // else if (number == '3')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[3][6 - i]);
 
-    else if (number == '4')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[4][6 - i]);
+    // else if (number == '4')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[4][6 - i]);
 
-    else if (number == '5')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[5][6 - i]);
+    // else if (number == '5')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[5][6 - i]);
 
-    else if (number == '6')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[6][6 - i]);
+    // else if (number == '6')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[6][6 - i]);
 
-    else if (number == '7')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[7][6 - i]);
+    // else if (number == '7')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[7][6 - i]);
 
-    else if (number == '8')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[8][6 - i]);
+    // else if (number == '8')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[8][6 - i]);
 
-    else if (number == '9')
-        for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[9][6 - i]);
+    // else if (number == '9')
+    //     for (uint8_t i = 0; i < 7; i++)
+    //         setData(segment_map[9][6 - i]);
 
     else
         for (uint8_t i = 0; i < 7; i++)
