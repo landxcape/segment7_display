@@ -108,7 +108,7 @@ void segment7_display::display_num_rows(String ROWS, bool first_row)
                 number_display(num, false);
         }
 
-        if (tdelay < 1000) // delayMicroseconds() can handle max of 16383 accurately
+        if (tdelay < 10000) // delayMicroseconds() can handle max of 16383 accurately
             delayMicroseconds(tdelay);
         else
             delay(tdelay / 1000);
