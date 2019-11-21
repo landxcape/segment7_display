@@ -38,6 +38,7 @@ void segment7_display::clearBits()
 void segment7_display::number_display(char c_number, bool decimalSet = false)
 {
     uint8_t number = (int)c_number - 48;
+
     digitalWrite(latchPin, LOW); // Latch
     setData(decimalSet);
 
