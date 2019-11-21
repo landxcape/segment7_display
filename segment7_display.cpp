@@ -19,13 +19,13 @@ void segment7_display::pinSetup(uint8_t dPin, uint8_t lPin, uint8_t cPin,
     selectionClock = sClock;
 }
 
-void segment7_display::setDisplay(int cols, int rows, int max_l_tdelay, bool CC)
+void segment7_display::setDisplay(int cols, int rows, unsigned long max_l_tdelay, bool CC)
 {
     ncols = cols;
     nrows = rows;
     max_loop_tdelay = max_l_tdelay;
     COMMON_CATHODE = CC;
-    tdelay = max_loop_tdelay / (cols * rows);
+    tdelay = (int)(max_loop_tdelay / ((int)cols * (int)rows));
 }
 
 void segment7_display::clearBits()
@@ -35,51 +35,19 @@ void segment7_display::clearBits()
     digitalWrite(latchPin, HIGH);
 }
 
-void segment7_display::number_display(char number, bool decimalSet = false)
+void segment7_display::number_display(char c_number, bool decimalSet = false)
 {
-    uint8_t num = (int)number - 48;
+    uint8_t number = (int)c_number - 48;
     digitalWrite(latchPin, LOW); // Latch
     setData(decimalSet);
 
-    if (num >= 0 && num <= 9)
+    if (number >= 0 && number <= 9)
         for (uint8_t i = 0; i < 7; i++)
-            setData(segment_map[num][6 - i]);
+            setData(segment_map[number][6 - i]);
 
-    // else if (number == '1')
+    // else if (c_number == '1')
     //     for (uint8_t i = 0; i < 7; i++)
     //         setData(segment_map[1][6 - i]);
-
-    // else if (number == '2')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[2][6 - i]);
-
-    // else if (number == '3')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[3][6 - i]);
-
-    // else if (number == '4')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[4][6 - i]);
-
-    // else if (number == '5')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[5][6 - i]);
-
-    // else if (number == '6')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[6][6 - i]);
-
-    // else if (number == '7')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[7][6 - i]);
-
-    // else if (number == '8')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[8][6 - i]);
-
-    // else if (number == '9')
-    //     for (uint8_t i = 0; i < 7; i++)
-    //         setData(segment_map[9][6 - i]);
 
     else
         for (uint8_t i = 0; i < 7; i++)
@@ -140,7 +108,7 @@ void segment7_display::display_num_rows(String ROWS, bool first_row)
                 number_display(num, false);
         }
 
-        if (tdelay < 16383)
+        if (tdelay < 1000) // delayMicroseconds() can handle max of 16383 accurately
             delayMicroseconds(tdelay);
         else
             delay(tdelay / 1000);

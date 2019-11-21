@@ -15,7 +15,7 @@ public:
     void pinSetup(uint8_t dPin = 2, uint8_t lPin = 3, uint8_t cPin = 4,
                   uint8_t sPin = 5, uint8_t sLatch = 6, uint8_t sClock = 7);
 
-    void setDisplay(int cols = 4, int rows = 1, int max_l_tdelay = 1000, bool CC = true);
+    void setDisplay(int cols = 4, int rows = 1, unsigned long max_l_tdelay = 1000, bool CC = true);
 
     void clearBits();
 
@@ -29,7 +29,7 @@ public:
 private:
     int ncols;
     int nrows;
-    int max_loop_tdelay;
+    unsigned long max_loop_tdelay;
     bool COMMON_CATHODE;
     int tdelay;
 
