@@ -1,0 +1,3 @@
+# segment7_display
+
+working on documentation.....
